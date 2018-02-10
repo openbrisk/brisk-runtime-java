@@ -22,13 +22,20 @@ public class Server
 	}
 
 	private void configure() {
-		router.get("/healthz").handler(null);
-		router.get("/runtime/v1").handler(null);
-		router.post("/runtime/v1").handler(null);
+		router.get("/healthz").handler(routingContext -> {
+			// TODO: Logging
+			routingContext.response()
+				.putHeader("Content-type", "text/plain")
+				.putHeader("Connection", "close")
+				.setStatusCode(200)
+				.end();
+		});
 	}
 
 	private void start() {
-		
+		vertx.createHttpServer()
+        	.requestHandler(router::accept)
+            .listen(8080, __ -> System.out.println("Listening on port 8080 ..."));
 	}
 
     public static void main( String[] args ) {
