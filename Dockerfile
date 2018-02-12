@@ -8,11 +8,11 @@ RUN apt-get update && apt-get install -y maven
 
 # Copy pom.xml first to cache maven dependencies.
 COPY pom.xml .
-RUN mvn clean install
+RUN mvn initialize && mvn install
 
 # Copy the rest and build.
 COPY src/ ./src
-RUN mvn install && mvn package
+RUN mvn install
 
 # Deploy stage
 FROM openjdk:10-jre
@@ -20,9 +20,12 @@ FROM openjdk:10-jre
 WORKDIR /app
 
 # Install Maven
-RUN apt-get update && apt-get install -y maven
+RUN apt-get update && apt-get install -y maven 
+COPY init.pom.xml pom.xml
+RUN mvn initialize && mvn install
 
+# Copy server jar.
 COPY --from=builder /app/target/brisk-runtime-java-*-jar-with-dependencies.jar /app/runtime.jar
+COPY startup.sh .
 
-ENTRYPOINT [ "java" ]
-CMD [ "-jar", "runtime.jar" ]
+ENTRYPOINT [ "./startup.sh" ]

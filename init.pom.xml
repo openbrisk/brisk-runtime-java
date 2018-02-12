@@ -2,16 +2,17 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.openbrisk.runtime</groupId>
-  <artifactId>brisk-runtime-java</artifactId>
+  <artifactId>brisk-runtime-maven-init</artifactId>
   <packaging>jar</packaging>
   <version>0.0.1</version>
-  <name>brisk-runtime-java</name>
+  <name>brisk-runtime-maven-init</name>
   <url>http://maven.apache.org</url>
   <dependencies>
+    <!-- https://mvnrepository.com/artifact/commons-lang/commons-lang -->
     <dependency>
-      <groupId>io.vertx</groupId>
-      <artifactId>vertx-web</artifactId>
-      <version>3.3.3</version>
+        <groupId>commons-lang</groupId>
+        <artifactId>commons-lang</artifactId>
+        <version>2.3</version>
     </dependency>
   </dependencies>
   <build>
